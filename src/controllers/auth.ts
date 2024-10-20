@@ -14,8 +14,42 @@ const generateToken = ({ id }: { id: number }) => {
   return { token, date };
 };
 
-export const login = (req: Request, res: Response) => {
-  res.send("login route");
+export const login = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  const user = await db.user.findUnique({ where: { email } });
+
+  if (!user) {
+    return res
+      .status(400)
+      .json({ message: "email or password is incorrect" });
+  }
+
+  const checkPassword = bcrypt.compareSync(password, user.password);
+
+  if (!checkPassword) {
+    return res
+      .status(400)
+      .json({ message: "email or password is incorrect" });
+  }
+
+  const { token, date } = generateToken({ id: user.id });
+
+  return res.status(200).json({
+    message: "user logged in successfully",
+    user: {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      token,
+      expires: date,
+    }
+  });
 };
 
 export const signup = async (req: Request, res: Response) => {
