@@ -1,6 +1,18 @@
-import { Request, Response } from "express";
+import e, { Request, Response } from "express";
 import db from "../../lib/db";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+
+const generateToken = ({ id }: { id: number }) => {
+  const date = new Date();
+  date.setDate(date.getDate() + 30);
+
+  const token = jwt.sign({ id }, process.env.JWT_SECRET!, {
+    expiresIn: "30d",
+  });
+
+  return { token, date };
+};
 
 export const login = (req: Request, res: Response) => {
   res.send("login route");
@@ -37,7 +49,17 @@ export const signup = async (req: Request, res: Response) => {
     },
   });
 
-  // Todo: generate token
+  const { token, date } = generateToken({ id: user.id });
 
-  return res.status(200).json({ message: "user created successfully", user });
+  return res.status(200).json({
+    message: "user created successfully",
+    user: {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      token,
+      expires: date,
+    },
+  });
 };
