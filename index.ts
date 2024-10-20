@@ -3,6 +3,8 @@ import authRoutes from "./src/routes/auh";
 
 const app = express();
 
+app.use(express.json());
+
 app.get("/", (req, res) => {
   res.send("Hello, world!");
 });
