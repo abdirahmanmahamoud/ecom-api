@@ -24,17 +24,13 @@ export const login = async (req: Request, res: Response) => {
   const user = await db.user.findUnique({ where: { email } });
 
   if (!user) {
-    return res
-      .status(400)
-      .json({ message: "email or password is incorrect" });
+    return res.status(400).json({ message: "email or password is incorrect" });
   }
 
   const checkPassword = bcrypt.compareSync(password, user.password);
 
   if (!checkPassword) {
-    return res
-      .status(400)
-      .json({ message: "email or password is incorrect" });
+    return res.status(400).json({ message: "email or password is incorrect" });
   }
 
   const { token, date } = generateToken({ id: user.id });
@@ -46,9 +42,10 @@ export const login = async (req: Request, res: Response) => {
       name: user.name,
       email: user.email,
       role: user.role,
+      createdAt: user.createdAt,
       token,
       expires: date,
-    }
+    },
   });
 };
 
@@ -92,6 +89,7 @@ export const signup = async (req: Request, res: Response) => {
       name: user.name,
       email: user.email,
       role: user.role,
+      createdAt: user.createdAt,
       token,
       expires: date,
     },
