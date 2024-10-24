@@ -41,6 +41,11 @@ export const middleware = async (
 
   if (authHeader && authHeader.startsWith("Bearer ")) {
     const token = authHeader.split(" ")[1];
+
+    if (!token) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as DecodedToken;
 
     const { id, exp } = decoded;
@@ -52,11 +57,12 @@ export const middleware = async (
     if (isAdminRoute(req)) {
       const user = await db.user.findUnique({ where: { id } });
 
-      if (user?.role !== "admin") {
+      if (user?.role == "admin") {
+        req.userId = id as number;
+        next();
+      } else {
         return res.status(401).json({ message: "not admin" });
       }
-      req.userId = id as number;
-      next();
     } else {
       req.userId = id as number;
       next();

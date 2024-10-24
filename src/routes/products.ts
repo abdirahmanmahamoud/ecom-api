@@ -14,9 +14,9 @@ router.get("/", getProducts as any);
 
 router.post("/", middleware as any, createProduct as any);
 
-router.put("/:id", updateProduct as any);
+router.put("/:id", middleware as any, updateProduct as any);
 
-router.delete("/:id", deleteProduct as any);
+router.delete("/:id", middleware as any, deleteProduct as any);
 
 router.get("/:id", getProductById as any);
 
