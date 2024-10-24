@@ -34,7 +34,7 @@ model Order {
   price     Float
   address   String
   type      String
-  phone     Int
+  phone     String
   userId    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
