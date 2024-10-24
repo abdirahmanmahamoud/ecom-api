@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -9,20 +8,49 @@ datasource db {
 }
 
 model User { 
-  id            Int @id @default(autoincrement())
-  name          String
-  email         String @unique
-  role          String @default("user")
-  password      String
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id        Int @id @default(autoincrement())
+  name      String
+  email     String @unique
+  role      String @default("user")
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  orders    Order[]
 }
+
 model Product {
-  id                Int @id @default(autoincrement())
-  name              String
-  description       String?
-  price             Float 
-  image             String
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  id          Int @id @default(autoincrement())
+  name        String
+  description String?
+  price       Float
+  image       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  orders      OrderProduct[]
+}
+
+model Order {
+  id        Int @id @default(autoincrement())
+  price     Float
+  address   String
+  type      String
+  phone     Int
+  userId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user      User @relation(fields: [userId], references: [id])
+  products  OrderProduct[]
+}
+
+model OrderProduct {
+  orderId   Int
+  productId Int
+  quantity  Int @default(1)
+
+  order     Order   @relation(fields: [orderId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@id([orderId, productId]) 
+
 }
