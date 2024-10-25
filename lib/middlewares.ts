@@ -26,6 +26,9 @@ const adminRoutes = [
   { method: "GET", url: "/order" },
   { method: "DELETE", url: "/order/:id" },
   { method: "GET", url: "/order/:id" },
+  { method: "GET", url: "/user" },
+  { method: "GET", url: "/user/:id" },
+  { method: "PUT", url: "/user/:id" },
 ];
 
 const isAdminRoute = (req: Request): boolean => {
