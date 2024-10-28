@@ -7,13 +7,13 @@ import db from "./db";
 declare global {
   namespace Express {
     interface Request {
-      userId?: number;
+      userId?: string;
     }
   }
 }
 
 type DecodedToken = {
-  id: number;
+  id: string;
   exp: number;
   iat: number;
 };
@@ -57,6 +57,10 @@ export const middleware = async (
 
     const { id, exp } = decoded;
 
+    if (typeof id !== "string") {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
     if (exp * 1000 < Date.now()) {
       return res.status(401).json({ message: "Token expired" });
     }
@@ -65,13 +69,13 @@ export const middleware = async (
       const user = await db.user.findUnique({ where: { id } });
 
       if (user?.role == "admin") {
-        req.userId = id as number;
+        req.userId = id as string;
         next();
       } else {
         return res.status(401).json({ message: "not admin" });
       }
     } else {
-      req.userId = id as number;
+      req.userId = id as string;
       next();
     }
   } else {

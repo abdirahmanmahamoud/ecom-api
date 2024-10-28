@@ -39,7 +39,7 @@ export const updateProduct = async (req: Request, res: Response) => {
 
   const product = await db.product.findUnique({
     where: {
-      id: Number(id),
+      id,
     },
   });
 
@@ -49,7 +49,7 @@ export const updateProduct = async (req: Request, res: Response) => {
 
   const updatedProduct = await db.product.update({
     where: {
-      id: Number(id),
+      id,
     },
     data: {
       name,
@@ -68,7 +68,7 @@ export const getProductById = async (req: Request, res: Response) => {
   const { id } = req.params;
   const products = await db.product.findUnique({
     where: {
-      id: Number(id),
+      id,
     },
   });
 
@@ -87,7 +87,7 @@ export const deleteProduct = async (req: Request, res: Response) => {
   }
   const product = await db.product.findUnique({
     where: {
-      id: Number(id),
+      id,
     },
   });
 
@@ -97,7 +97,7 @@ export const deleteProduct = async (req: Request, res: Response) => {
 
   await db.product.delete({
     where: {
-      id: Number(id),
+      id,
     },
   });
 

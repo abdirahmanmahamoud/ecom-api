@@ -3,7 +3,7 @@ import db from "../../lib/db";
 
 type order = {
   product: {
-    id: number;
+    id: string;
     quantity: number;
   }[];
   phone: string;
@@ -82,7 +82,7 @@ export const updateOrder = async (req: Request, res: Response) => {
 
   const order = await db.order.findUnique({
     where: {
-      id: Number(id),
+      id,
     },
   });
 
@@ -92,7 +92,7 @@ export const updateOrder = async (req: Request, res: Response) => {
 
   await db.order.update({
     where: {
-      id: Number(id),
+      id,
     },
     data: {
       type,
@@ -130,7 +130,7 @@ export const deleteOrder = async (req: Request, res: Response) => {
 
   const order = await db.order.findUnique({
     where: {
-      id: Number(id),
+      id,
     },
   });
 
@@ -140,13 +140,13 @@ export const deleteOrder = async (req: Request, res: Response) => {
 
   await db.orderProduct.deleteMany({
     where: {
-      orderId: Number(id),
+      orderId: order.id,
     },
   });
 
   await db.order.delete({
     where: {
-      id: Number(id),
+      id,
     },
   });
   return res.status(200).json({ message: "Order deleted" });
@@ -159,7 +159,7 @@ export const orderById = async (req: Request, res: Response) => {
   }
   const orders = await db.order.findUnique({
     where: {
-      id: Number(id),
+      id,
     },
     include: {
       products: {

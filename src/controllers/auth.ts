@@ -3,7 +3,7 @@ import db from "../../lib/db";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-const generateToken = ({ id }: { id: number }) => {
+const generateToken = ({ id }: { id: string }) => {
   const date = new Date();
   date.setDate(date.getDate() + 30);
 

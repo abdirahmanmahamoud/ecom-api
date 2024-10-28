@@ -27,7 +27,7 @@ export const getUserById = async (req: Request, res: Response) => {
 
   const user = await db.user.findUnique({
     where: {
-      id: Number(id),
+      id,
     },
     select: {
       id: true,
@@ -55,7 +55,7 @@ export const updateUser = async (req: Request, res: Response) => {
 
   const user = await db.user.findUnique({
     where: {
-      id: Number(id),
+      id,
     },
   });
 
@@ -65,7 +65,7 @@ export const updateUser = async (req: Request, res: Response) => {
 
   const updatedUser = await db.user.update({
     where: {
-      id: Number(id),
+      id,
     },
     data: {
       role,

@@ -3,8 +3,15 @@ import authRoutes from "./src/routes/auh";
 import productsRoutes from "./src/routes/products";
 import orderRouters from "./src/routes/order";
 import userRouter from "./src/routes/user";
+import cors from "cors";
 
 const app = express();
+
+const corsOptions = {
+  origin: "*",
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
