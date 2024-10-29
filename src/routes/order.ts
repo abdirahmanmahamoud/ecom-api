@@ -1,5 +1,5 @@
 import express from "express";
-import { middleware } from "../../lib/middlewares";
+import { middleware } from "../../lib/middlewares.js";
 import {
   allOrders,
   CreateOrder,
@@ -7,7 +7,7 @@ import {
   getOrderByUser,
   orderById,
   updateOrder,
-} from "../controllers/order";
+} from "../controllers/order.js";
 
 const router = express.Router();
 

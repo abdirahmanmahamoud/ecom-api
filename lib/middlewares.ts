@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { match } from "path-to-regexp";
 import * as express from "express";
-import db from "./db";
+import db from "./db.js";
 
 declare global {
   namespace Express {

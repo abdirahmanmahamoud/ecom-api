@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import db from "../../lib/db";
+import db from "../../lib/db.js";
 
 export const getProducts = async (req: Request, res: Response) => {
   const products = await db.product.findMany();

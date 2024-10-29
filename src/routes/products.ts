@@ -5,8 +5,8 @@ import {
   updateProduct,
   deleteProduct,
   getProductById,
-} from "../controllers/products";
-import { middleware } from "../../lib/middlewares";
+} from "../controllers/products.js";
+import { middleware } from "../../lib/middlewares.js";
 
 const router = express.Router();
 

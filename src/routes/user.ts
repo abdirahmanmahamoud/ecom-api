@@ -1,6 +1,6 @@
 import express from "express";
-import { middleware } from "../../lib/middlewares";
-import { getAllUsers, getUserById, updateUser } from "../controllers/user";
+import { middleware } from "../../lib/middlewares.js";
+import { getAllUsers, getUserById, updateUser } from "../controllers/user.js";
 
 const router = express.Router();
 
